@@ -23,6 +23,11 @@
 
 \usetikzlibrary{calc}
 \usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+\tikzset{main node/.style={ellipse,fill=blue!20,draw,minimum size=1cm,inner sep=0pt},
+            }
 
 \author{\authorinfo}
 \title{\titleinfo}
@@ -58,7 +63,43 @@
         \end{itemize}   
     \end{enumerate}
 \item[\textbf{2}]
-    \textbf{(Prozess und Threads)}
+    \textbf{(Prozesse und Threads)}
+
+    \begin{enumerate}
+        \item[\textbf{a)}]
+            \textbf{Programm, Prozess, Thread}
+
+            Ein Programm ist eine vorher eindeutig definierte Abfolge an Anweisungen an die Maschine,
+            die zuvor von einem Programmierer in der Programmiersprache seiner Wahl niedergeschrieben wurde. Zur Ausf"uhrung eines Programmes wird ein Prozess ben"otigt, welcher vom Betriebssystem erzeugt wird und ihm einen eigenen exklusiven Speicherbereich zuweist.
+            Das Betriebssystem verwaltet auch die Rechenzeit mit Hilfe von Interrupts. 
+            Ein Prozess kann explizit durch die Programmierung aus mehreren Threads bestehen, welche auf dem selben Speicherbereich parallel arbeiten k"onnen.
+
+        \item[\textbf{d)}]
+            \textbf{Lebenszyklus eines Prozesses}
+
+            \begin{tikzpicture}
+                \node[main node] (1) {New};
+                \node[main node] (2) [right = 3.3cm of 1]  {Ready};
+                \node[main node] (3) [right = 3.3cm of 2] {Running};
+                \node[main node] (4) [below = 2.3cm of 2] {Blocked};
+                \node[main node] (5) [right = 3.3cm of 4] {Terminated};
+
+                \path[draw,thick,arrows=->,anchor=south]
+                (1) edge node {spawn} (2)
+                (2) edge node {dispatch} (3)
+                (4) edge node [anchor=east]{wait complete} (2)
+                (3) edge node [anchor=east]{wait} (4)
+                (3) edge node [anchor=south west]{exit} (5)
+                ;
+                \path[draw,thick,arrows=->,bend right,anchor=south]
+                (3) edge node {interrupt} (2)
+                ;
+            \end{tikzpicture}
+
+            Todo: Erkl"aren
+
+
+    \end{enumerate}
 
 
 \item[\textbf{3}]
