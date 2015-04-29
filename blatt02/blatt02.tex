@@ -80,7 +80,8 @@
                 ;
             \end{tikzpicture}
 
-            Todo: Erkl"aren
+            Durch die Erzeugung eines Prozesses gelangt dieser erst einmal in den Readystate.
+            Von diesem aus k"onnen ihm nun Aufgaben zugeteilt werden (Dispatcher l"adt Kontext) und er wechselt in den Runningstate, d.h. er ''l"auft''. Von dort aus kann er entweder unterbrochen (interrupt), angehalten (wait), oder terminiert (exit) werden. Wait unterscheidet sich vom Interrupt insofern, als dass der Prozess beim Wait erst die Nachricht "uber die Vollendung des Wartens erhalten muss, bevor er wieder wie beim Interrupt in den Readystate gelangt.
 
 
     \end{enumerate}
