@@ -19,6 +19,7 @@
 \usepackage{tikz}
 \usepackage{fancyhdr}
 \usepackage{multicol}
+\usepackage{xhfill}
 
 \usetikzlibrary{calc}
 \usetikzlibrary{patterns}
@@ -38,14 +39,29 @@
 \fancyhead[R]{\titleinfo}
 \fancyfoot[C]{\thepage}
 
+\newcommand{\ditto}{$\vdots$}
+\newcommand{\Frac}[2]{\frac{#1}{#2}}
+
 \begin{document}
 \maketitle
 
 
-\begin {enumerate}
+\begin{enumerate}
 \item[\textbf{1}]
     \textbf{(Grundlagen von Betriebssystemen)}
+    \begin{enumerate} 
+        \item[a)]
+        \begin{itemize}
+            \item \textbf{Abstraktion}: Das Betriebssystem bietet ein ,,schönes'' (aufgeräumt, übersichtlich, verständlich, standardisiert) Interface zur Kommunikation mit der Hardware. Dies macht es Anwendungsentwicklern einfacher damit zu interagieren.
+            \item \textbf{Resourcenmanagement}: Das Betriebssystem weist den Programmen Speicher und Rechenzeit zu. Es verwaltet Gerate und Dateien. 
 
+        \end{itemize}
+        \item[b)]
+        \begin{itemize}
+            \item \textbf{Abstraktion}: Verschiedene Hardwaremodule des gleichen Typs (z.B. USB-Sticks versch. Hersteller oder WLAN/Ethernetkarte als verschiedene Netzwerkadapter) können über die gleiche Schnittstelle angesprochen werden. Damit wird die Komplexität der eigentlichen Maschine versteckt.  
+            \item \textbf{Resourcenmanagement}: Der Hauptspeicher wird verwaltet, den Programmen werden verschiedene Speicherbereiche zugewiesen. Die Festplatte wird in logische Segmente unterteilt, das Dateisystem verwaltet Dateien als logische, benannte Einheiten.
+        \end{itemize}   
+    \end{enumerate}
 \item[\textbf{2}]
     \textbf{(Prozesse und Threads)}
 
@@ -79,9 +95,14 @@
                 (3) edge node {interrupt} (2)
                 ;
             \end{tikzpicture}
-
+            \\
+            \\
+            \\
             Durch die Erzeugung eines Prozesses gelangt dieser erst einmal in den Readystate.
-            Von diesem aus k"onnen ihm nun Aufgaben zugeteilt werden (Dispatcher l"adt Kontext) und er wechselt in den Runningstate, d.h. er ''l"auft''. Von dort aus kann er entweder unterbrochen (interrupt), angehalten (wait), oder terminiert (exit) werden. Wait unterscheidet sich vom Interrupt insofern, als dass der Prozess beim Wait erst die Nachricht "uber die Vollendung des Wartens erhalten muss, bevor er wieder wie beim Interrupt in den Readystate gelangt.
+            Von diesem aus k"onnen ihm nun Aufgaben zugeteilt werden (Dispatcher l"adt Kontext) und er wechselt in den Runningstate, d.h. er ''l"auft''. 
+            Von dort aus kann er entweder unterbrochen (interrupt), angehalten (wait), oder terminiert (exit) werden. 
+            Wait unterscheidet sich vom Interrupt insofern, als dass der Prozess beim Wait erst die Nachricht "uber die Vollendung des Wartens erhalten muss, 
+            bevor er wieder wie beim Interrupt in den Readystate gelangt.
 
 
     \end{enumerate}
@@ -89,6 +110,34 @@
 
 \item[\textbf{3}]
     \textbf{(n-Adressmaschine)}
+
+    Wir dürfen keine Hilfsregister verwenden, benötigen aber in einer 2-Adress-Maschine mindestens 2 Register um Berechnungen durchzuführen. Daher bennen wir unsere Register R1 und R2, als Hilfsspeicherzelle verwenden wir H1.
+
+    \begin{tabular}{lll|c|c|c|c}
+        Befehl & & & $R_1$ & $R_2$ & $H_1$ & $Z$ \\ \hline
+        LOAD & $a_1$ & $R_1$ & $a_1$ & & & \\
+        LOAD & $a_2$ & $R_2$ & \ditto & $a_2$ & & \\
+        ADD  & $R_1$ & $R_2$ & \ditto & $a_1 + a_2$ & & \\
+        LOAD & $a_3$ & $R_1$ & $a_3$ & \ditto & & \\
+        DIV  & $R_2$ & $R_1$ & $\Frac{a_1 + a_2}{a_3}$ & \ditto & & \\
+        STORE& $R_1$ & $H_1$ & \ditto & \ditto & $\Frac{a_1 + a_2}{a_3}$ & \\
+        LOAD & $b_1$ & $R_1$ & $b_1$ & \ditto & \ditto & \\
+        LOAD & $b_2$ & $R_2$ & \ditto & $b_2$ & \ditto & \\
+        ADD  & $R_1$ & $R_2$ & \ditto & $b_1 + b_2$ & \ditto & \\
+        LOAD & $b_3$ & $R_1$ & $b_3$ & \ditto & \ditto & \\
+        DIV  & $R_2$ & $R_1$ & $\Frac{b_1 + b_2}{b_3}$ & \ditto & \ditto & \\
+        LOAD & $H_1$ & $R_2$ & \ditto & $\Frac{a_1 + a_2}{a_3}$ & \ditto & \\
+        ADD  & $R_2$ & $R_1$ & $\Frac{a_1 + a_2}{a_3} + \Frac{b_1 + b_2}{b_3}$ & \ditto & \ditto & \\
+        STORE& $R_1$ & $Z$   & \ditto & \ditto & \ditto & $\Frac{a_1 + a_2}{a_3} + \Frac{b_1 + b_2}{b_3}$
+    \end{tabular}\\[10pt]
+
+    \begin{tabular}{ll}
+    Leseoperationen:& 7 \\
+    Schreiboperationen:& 2 \\
+    Rechenbefehle:& 5\\
+    Berechnungszeit:& $(7+2)*20 + 5 = 185$ FLOP
+    \end{tabular}
+
 
 \end{enumerate}
 \end{document}
