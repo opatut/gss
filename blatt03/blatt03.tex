@@ -1,0 +1,132 @@
+\documentclass[a4paper,11pt]{article}
+
+\newcommand{\authorinfo}{Carolin Konietzny, Paul Bienkowski, Julian Tobergte, Oliver Sengpiel}
+\newcommand{\titleinfo}{GSS Abgabe 03}
+
+% PREAMBLE ===============================================================
+
+\usepackage[german,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top=1.3in, bottom=1in, left=1.0in, right=0.6in]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{pgfplots}
+\usepackage{breqn}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{xhfill}
+
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+\tikzset{main node/.style={ellipse,fill=blue!20,draw,minimum size=1cm,inner sep=0pt},
+            }
+
+\author{\authorinfo}
+\title{\titleinfo}
+\date{\today}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\authorinfo}
+\fancyhead[R]{\titleinfo}
+\fancyfoot[C]{\thepage}
+
+\newcommand{\ditto}{$\vdots$}
+\newcommand{\Frac}[2]{\frac{#1}{#2}}
+
+\begin{document}
+\maketitle
+
+
+\begin{enumerate}
+\item[\textbf{1.1}]
+    \textbf{Rechnersicherheit: Zugangs- und Zugriffskontrollen}
+    \begin{enumerate}
+        \item[a)]
+            Eine Zugangskontrolle
+
+            \begin{itemize}
+                \item regelt, ob überhaupt eine Kommunikation zwischen System und User
+                stattfindet.
+                \item findet statt, bevor überhaupt Dienste in anspruch genommen werden können
+            \end{itemize}
+
+            Eine Zugriffskontrolle
+
+            \begin{itemize}
+                \item regelt, welche Dienste des Systems von dem User benutzt werden können
+                \item setzt voraus, dass der User eine Zugangsberechtigung für das System hat
+                \item kann Rechte für einzelne Operationen auf Objekten verwalten
+            \end{itemize}
+
+        \item[b)]
+
+            Ja, es kann sinnvoll sein, wenn mit dem Zugangsrecht alle Zugriffe verbunden sind. Beispiel: [TODO]
+
+        \item[c)]
+        \item[d)]
+
+            Nein, dies widerspricht nicht der Vorherigen Teilaufgabe, da der Besitz des Links an sich bereits eine Zugangskontrolle ist. Wer den Link kennt, ist zugangsberechtigt. Der ,,geheime'' Teil des Links, der zugleich Identifikation für den Ordner ist, ist schwer zu erraten und gilt als ,,Zugangsdaten''.
+
+
+
+    \end{enumerate}
+
+\item[\textbf{2}]
+    \textbf{Timing-Attack}
+
+    \begin{enumerate}
+        \item[1.]
+            \begin{verbatim}public class Timer {
+    public static boolean passwordCompare(String a, String b) {
+        int i;
+
+        if (a.length() != b.length()) return false;
+
+        for (i = 0; i < a.length() && a.charAt(i) == b.charAt(i); i++);
+
+        return i == a.length();
+    }
+
+    public static void main(String[] args) {
+        long start, end;
+
+        start = System.nanoTime();
+        passwordCompare("abcdefghijklmnopqrstuv", "abcdefghijklmnopqrstuv");
+        end = System.nanoTime();
+        System.out.println("Gleiche Wörter: " + (end - start) + " ns");
+
+        start = System.nanoTime();
+        passwordCompare("abcdefghijklmnopqrstuv", "vabcdefghijklmnopqrstu");
+        end = System.nanoTime();
+        System.out.println("Unterschiedliche Wörter: " + (end - start) + " ns");
+    }
+}\end{verbatim}
+
+            Die Ausgabe des Programmes ist wie folgt:
+
+            \begin{verbatim}$ java -Djava.compiler=None Timer
+Gleiche Wörter: 11426 ns
+Unterschiedliche Wörter: 2308 ns\end{verbatim}
+
+            Der signifikante Unterschied (bei gleicher Länge) ergibt sich daraus,
+            dass bereits der erste Buchstabe vom korrekten Passwort abweicht.
+
+        \item[3.]
+
+            Zuerst wird die Länge des Passwortes ermittelt. Da die Funktion frühzeitig abbricht, sind Eingaben mit falscher Länge immer früher fertig. Daher werden zuerst Passwörter ,,a'', ,,aa'', ,,aaa'', ... ausprobiert, bis eines deutlich länger braucht.
+
+            Dann werden ,,von vorne'' Buchstaben erraten. Die for-loop läuft länger, je mehr Buchstaben vom Anfang aus korrekt sind. Also kann man alle Passwörter ,,axxxxx'', ,,bxxxxx'', ... mit korrekter Länge ausprobieren, eines davon wird ein wenig länger brauchen. Damit hat man den ersten Buchstaben erraten und kann mit dem nächsten fortfahren.
+
+    \end{enumerate}
+
+\end{enumerate}
+\end{document}
