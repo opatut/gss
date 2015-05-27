@@ -20,6 +20,7 @@
 \usepackage{fancyhdr}
 \usepackage{multicol}
 \usepackage{xhfill}
+\usepackage{blockgraph} % IMPORTANT
 
 \usetikzlibrary{calc}
 \usetikzlibrary{patterns}
@@ -69,7 +70,68 @@
 
 \begin{itemize}
     \item[a)]
+
+    Zeitskala: t/5
+
+    \begin{blockgraph}{34}{4}{0.4} % 170 / 5 = 34 cols
+    % \bglabelxx erzeut Beschriftung der X-Achse an bestimmter Position
+    \bglabelxx{0}
+    \bglabelxx{5}
+    \bglabelxx{10}
+    \bglabelxx{15}
+    \bglabelxx{20}
+    \bglabelxx{25}
+    \bglabelxx{30}
+    \bglabelxx{34}
+
+    % \bglabely erzeut eine Beschriftung der X-Achse an bestimmter Position
+    \bglabely{3}{Periodendauer Z}
+    \bglabely{2}{Periodendauer B}
+    \bglabely{1}{Periodendauer M}
+    \bglabely{0}{Berechnung}
+
+    % \bgblock erzeugt Block innerhalb des Graphen. Parameter:
+    %    Y-Position (z.B. CPU), optional
+    %    Beginn auf der X-Achse
+    %    Ende auf der X-Achse
+    %    Beschriftung
+    \bgblock[0]{0}{6}{$M$}
+    \bgblock[0]{8}{5}{$B$}
+    \bgblock[0]{12}{16}{$Z$}
+
+    \bgblock[1]{0}{23}{$M$}
+    \bgblock[1]{23}{46}{$M$} % 115 / 5 = 23
+    \bgblock[2]{0}{8}{$B$}
+    \bgblock[2]{8}{16}{$B$}
+    \bgblock[2]{16}{24}{$B$}
+    \bgblock[2]{24}{32}{$B$} % 40 / 5 = 8
+    \bgblock[3]{0}{12}{$Z$}
+    \bgblock[3]{12}{24}{$Z$}
+    \bgblock[3]{24}{36}{$Z$} % 60 / 5 = 12
+
+
+
+\end{blockgraph}
 \end{itemize}
 
 \end{enumerate}
+
+\begin{blockgraph}{15}{1}{0.4}
+    % \bglabelxx erzeut Beschriftung der X-Achse an bestimmter Position
+    \bglabelxx{0}
+    \bglabelxx{5}
+    \bglabelxx{10}
+    \bglabelxx{15}
+
+    % \bgblock erzeugt Block innerhalb des Graphen. Parameter:
+    %    Y-Position (z.B. CPU), optional
+    %    Beginn auf der X-Achse
+    %    Ende auf der X-Achse
+    %    Beschriftung
+    \bgblock{0}{4}{$P_1$}
+    \bgblock{4}{7}{$P_2$}
+    \bgblock{7}{12}{$P_3$}
+
+\end{blockgraph}
+
 \end{document}
