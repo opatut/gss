@@ -70,10 +70,46 @@
 
 \begin{itemize}
     \item[a)]
+        Man kann die anteilige Rechenzeit der Prozesse in ihrer jeweiligen Periode
+        ermitteln. Damit ergibt sich, wie lange ein Prozess bei beliebig vielen
+        Perioden den Prozessor belegt. Für unsere Prozesse A1 bis A3 ergibt sich
+        folgendes:
 
-    \item[b)]
+        $$P(A_1) = \frac{1}{4} \hspace{0.5cm} P(A_2) = \frac{3}{7} \hspace{0.5cm} P(A_3) = \frac{1}{3}$$
 
-    \item[c)] 
+        Summiert man diese Anteile auf, erhält man einen Wert über $1$, das heißt,
+        wir benötigen mehr Rechenzeit, als der eine Prozessor hergibt. Daher ist
+        kein Scheduling möglich:
+
+        $$P(A_1) + P(A_2) + P(A_3) \approx 1.0119 > 1$$
+
+        Die Erklärung hierfür ist, dass man zwar mit gutem Scheduling eine gewisse
+        Anzahl an Perioden durchführen kann, dabei aber niemals Rechenzeit ,,übrig''
+        bleibt, und man sogar irgendwann eine ,,Rechenzeitschuld'' aufgebaut hat,
+        die zu groß ist, als dass man alle Prozesse in ihrer jeweiligen Periode
+        unterbringen könnte.
+
+    \item[b) ii)]
+        \textbf{Rate-montonotic scheduling}
+
+        \begin{figure}[h]
+            \center
+            \scalebox{0.5}{\input{rms.tex}}
+        \end{figure}
+
+        Es lässt sich feststellen, dass $B2$ nicht ein einziges Mal
+        laufen kann. Dies liegt daran, dass es die geringste Priorität (längste
+        Periode) hat, und andere Prozesse gleichzeitig oder kurz vorher wieder
+        bereit werden.
+
+    \item[c)]
+
+        \textbf{Time-Sharing}
+
+        \begin{center}
+            \scalebox{0.5}{\input{timesharing.tex}}
+        \end{center}
+
 \end{itemize}
 
 \item[\textbf{3}]
@@ -81,99 +117,18 @@
 \begin{itemize}
     \item[a)]
 
-    Zeitskala: t/5
+        Zeitskala: $\frac{t}{5}$
 
-    \begin{blockgraph}{34}{5}{0.4} % 170 / 5 = 34 cols
-    \bglabelxx{0}
-    \bglabelxx{5}
-    \bglabelxx{10}
-    \bglabelxx{15}
-    \bglabelxx{20}
-    \bglabelxx{25}
-    \bglabelxx{30}
-    \bglabelxx{34}
+        \begin{figure}[h]
+            \center
+            \scalebox{0.4}{\input{inversion.tex}}
+        \end{figure}
 
-    \bglabely{4}{Periodendauer Z}
-    \bglabely{3}{Periodendauer B}
-    \bglabely{2}{Periodendauer M}
-    \bglabely{1}{Berechnung}
-    \bglabely{0}{$Kontextswitch \star$}
+        $\star :$ W"ahrend der Bearbeitung von M1 werden Prozessen mit h"oherer Priorit"at Rechenzeit zugewiesen, welche ,,dazwischengeschoben'' werden, dh. die Mutexlocks von dem vorherig laufenden Prozess bleiben erhalten, in diesem Fall M1. Dies bedeutet aber immernoch eine sequentielle Ausf"uhrung.
 
-    \bgblock[1]{0}{2}{$B_1$}
-    \bgblock[1]{2}{6}{$Z_1$}
-    \bgblock[1]{6}{8}{$M_1 a$}
-    \bgblock[0]{8}{10}{$B_2$}
-    \bgblock[1]{10}{12}{$M_1 b$}
-    \bgblock[0]{12}{16}{$Z_2$}
-    \bgblock[0]{16}{18}{$B_3$}
-    \bgblock[1]{18}{20}{$M_1 c$}
-
-    \bgblock[2]{0}{23}{$M$}
-    \bgblock[2]{23}{34}{$M$} % 115 / 5 = 23
-    \bgblock[3]{0}{12}{$Z$}
-    \bgblock[3]{12}{24}{$Z$}
-    \bgblock[3]{24}{34}{$Z$} % 60 / 5 = 12
-    \bgblock[4]{0}{8}{$B$}
-    \bgblock[4]{8}{16}{$B$}
-    \bgblock[4]{16}{24}{$B$}
-    \bgblock[4]{24}{32}{$B$} % 40 / 5 = 8
-
-
-
-\end{blockgraph}
-
-$\star :$ W"ahrend der Bearbeitung von M1 werden Prozessen mit h"oherer Priorit"at Rechenzeit zugewiesen, welche ''Zwischengeschoben'' werden, dh. die Mutexlocks von dem vorherig laufenden Prozess bleiben erhalten, in diesem Fall M1. Dies bedeutet aber immernoch eine sequentielle Ausf"uhrung.
-\\
-
-Problematisch wird das ganze wenn ein mittelhoch Priorisierter Prozess (Z) Rechenzeit erh"alt, der dann von einem hochpriorisierten Prozess (B) widerum abgel"ost werden soll. Dabei kann n"amlich dann der Mutexlock auf einen Wert, auf den M und B zugreifen nicht von M aufgel"ost werden, weil M zu diesem Zeitpunkt ja garnicht aktiv ist.
-Daher w"urden erst alle anderen Prozess durchlaufen, die h"ohere Priorit"at als M haben, bevor B endlich zur Berechnung kommen darf. Dies hat dann bei zeitkritischen Laufpl"anen die Folge, dass B zu sp"at rechnen kann.
-\\
-
-Der Graph mit dem Blockgraph Package sieht bei uns unlesbar aus, daher nochmal der Source-code:
-
-\begin{lstlisting}
-    \begin{blockgraph}{34}{5}{0.4} % 170 / 5 = 34 cols
-
-    \bglabelxx{0}
-    \bglabelxx{5}
-    \bglabelxx{10}
-    \bglabelxx{15}
-    \bglabelxx{20}
-    \bglabelxx{25}
-    \bglabelxx{30}
-    \bglabelxx{34}
-
-    \bglabely{4}{Periodendauer Z}
-    \bglabely{3}{Periodendauer B}
-    \bglabely{2}{Periodendauer M}
-    \bglabely{1}{Berechnung}
-    \bglabely{0}{$Kontextswitch \star$}
-
-    \bgblock[1]{0}{2}{$B_1$}
-    \bgblock[1]{2}{6}{$Z_1$}
-    \bgblock[1]{6}{8}{$M_1 a$}
-    \bgblock[0]{8}{10}{$B_2$}
-    \bgblock[1]{10}{12}{$M_1 b$}
-    \bgblock[0]{12}{16}{$Z_2$}
-    \bgblock[0]{16}{18}{$B_3$}
-    \bgblock[1]{18}{20}{$M_1 c$}
-
-
-    \bgblock[2]{0}{23}{$M$}
-    \bgblock[2]{23}{34}{$M$} % 115 / 5 = 23
-    \bgblock[3]{0}{12}{$Z$}
-    \bgblock[3]{12}{24}{$Z$}
-    \bgblock[3]{24}{34}{$Z$} % 60 / 5 = 12
-    \bgblock[4]{0}{8}{$B$}
-    \bgblock[4]{8}{16}{$B$}
-    \bgblock[4]{16}{24}{$B$}
-    \bgblock[4]{24}{32}{$B$} % 40 / 5 = 8
-
-
-
-\end{blockgraph}
-\end{lstlisting}
-\end{itemize}
+        Problematisch wird das ganze wenn ein mittelhoch Priorisierter Prozess (Z) Rechenzeit erh"alt, der dann von einem hochpriorisierten Prozess (B) widerum abgel"ost werden soll. Dabei kann n"amlich dann der Mutexlock auf einen Wert, auf den M und B zugreifen nicht von M aufgel"ost werden, weil M zu diesem Zeitpunkt ja garnicht aktiv ist.
+        Daher w"urden erst alle anderen Prozess durchlaufen, die h"ohere Priorit"at als M haben, bevor B endlich zur Berechnung kommen darf. Dies hat dann bei zeitkritischen Laufpl"anen die Folge, dass B zu sp"at rechnen kann.
+    \end{itemize}
 
 \end{enumerate}
 
