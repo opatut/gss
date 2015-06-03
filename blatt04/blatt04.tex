@@ -60,10 +60,47 @@
     \begin{figure}[h]
         \scalebox{0.5}{\input{blockdiagram1.tex}}
     \end{figure}
+
+
+    \underline{Wahl des ersten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P1 & 0 & $1$\\
+    \end{tabular} \\
+    \underline{Wahl des zweiten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P2 & 2 & $\frac{7}{5}$ \\
+        P3 & 1 & $2$ \\
+        P4 & 0 & $1$ \\
+    \end{tabular} \\
+    \underline{Wahl des dritten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P2 & 5 & $\frac{10}{5}$ \\
+        P4 & 4 & $\frac{6}{2}$ \\
+        P5 & 0 & $1$\\
+    \end{tabular} \\
+    \underline{Wahl des vierten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P2 & 7 & $\frac{12}{5}$ \\
+        P5 & 3 & $\frac{11}{8}$ \\
+    \end{tabular} \\
+    \underline{Wahl des fünften Prozesses}:\\
+    Es bleibt nur noch P5 übrig.
     \item[b)] Roundrobin:
     \begin{figure}[h]
         \scalebox{0.5}{\input{blockdiagram2.tex}}
     \end{figure}
+
+    Hier sind keine Berechnungen nötig, da die Prozesse in der Reihenfolge
+    in die Warteschlange hinzugefügt werden, in der sie ankommen, und sie in
+    dieser Reihenfolge abgearbeitet/getauscht werden.
 \end{itemize}
 
 \item[\textbf{2}]
@@ -83,44 +120,10 @@
 
     Zeitskala: t/5
 
-    \begin{blockgraph}{34}{5}{0.4} % 170 / 5 = 34 cols
-    \bglabelxx{0}
-    \bglabelxx{5}
-    \bglabelxx{10}
-    \bglabelxx{15}
-    \bglabelxx{20}
-    \bglabelxx{25}
-    \bglabelxx{30}
-    \bglabelxx{34}
+    \begin{figure}[h]
+        \scalebox{0.4}{\input{blockdiagram3.tex}}
+    \end{figure}
 
-    \bglabely{4}{Periodendauer Z}
-    \bglabely{3}{Periodendauer B}
-    \bglabely{2}{Periodendauer M}
-    \bglabely{1}{Berechnung}
-    \bglabely{0}{$Kontextswitch \star$}
-
-    \bgblock[1]{0}{2}{$B_1$}
-    \bgblock[1]{2}{6}{$Z_1$}
-    \bgblock[1]{6}{8}{$M_1 a$}
-    \bgblock[0]{8}{10}{$B_2$}
-    \bgblock[1]{10}{12}{$M_1 b$}
-    \bgblock[0]{12}{16}{$Z_2$}
-    \bgblock[0]{16}{18}{$B_3$}
-    \bgblock[1]{18}{20}{$M_1 c$}
-
-    \bgblock[2]{0}{23}{$M$}
-    \bgblock[2]{23}{34}{$M$} % 115 / 5 = 23
-    \bgblock[3]{0}{12}{$Z$}
-    \bgblock[3]{12}{24}{$Z$}
-    \bgblock[3]{24}{34}{$Z$} % 60 / 5 = 12
-    \bgblock[4]{0}{8}{$B$}
-    \bgblock[4]{8}{16}{$B$}
-    \bgblock[4]{16}{24}{$B$}
-    \bgblock[4]{24}{32}{$B$} % 40 / 5 = 8
-
-
-
-\end{blockgraph}
 
 $\star :$ W"ahrend der Bearbeitung von M1 werden Prozessen mit h"oherer Priorit"at Rechenzeit zugewiesen, welche ''Zwischengeschoben'' werden, dh. die Mutexlocks von dem vorherig laufenden Prozess bleiben erhalten, in diesem Fall M1. Dies bedeutet aber immernoch eine sequentielle Ausf"uhrung.
 \\
