@@ -60,10 +60,47 @@
     \begin{figure}[h]
         \scalebox{0.5}{\input{blockdiagram1.tex}}
     \end{figure}
+
+
+    \underline{Wahl des ersten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P1 & 0 & $1$\\
+    \end{tabular} \\
+    \underline{Wahl des zweiten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P2 & 2 & $\frac{7}{5}$ \\
+        P3 & 1 & $2$ \\
+        P4 & 0 & $1$ \\
+    \end{tabular} \\
+    \underline{Wahl des dritten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P2 & 5 & $\frac{10}{5}$ \\
+        P4 & 4 & $\frac{6}{2}$ \\
+        P5 & 0 & $1$\\
+    \end{tabular} \\
+    \underline{Wahl des vierten Prozesses}:\\
+    \begin{tabular}{c|c|c}
+        Prozesse in Warteschleife & Wartezeit & Bediengüte \\
+        \hline
+        P2 & 7 & $\frac{12}{5}$ \\
+        P5 & 3 & $\frac{11}{8}$ \\
+    \end{tabular} \\
+    \underline{Wahl des fünften Prozesses}:\\
+    Es bleibt nur noch P5 übrig.
     \item[b)] Roundrobin:
     \begin{figure}[h]
         \scalebox{0.5}{\input{blockdiagram2.tex}}
     \end{figure}
+
+    Hier sind keine Berechnungen nötig, da die Prozesse in der Reihenfolge
+    in die Warteschlange hinzugefügt werden, in der sie ankommen, und sie in
+    dieser Reihenfolge abgearbeitet/getauscht werden.
 \end{itemize}
 
 \item[\textbf{2}]
@@ -121,7 +158,7 @@
 
         \begin{figure}[h]
             \center
-            \scalebox{0.4}{\input{inversion.tex}}
+            \scalebox{0.4}{\input{blockdiagram3.tex}}
         \end{figure}
 
         $\star :$ W"ahrend der Bearbeitung von M1 werden Prozessen mit h"oherer Priorit"at Rechenzeit zugewiesen, welche ,,dazwischengeschoben'' werden, dh. die Mutexlocks von dem vorherig laufenden Prozess bleiben erhalten, in diesem Fall M1. Dies bedeutet aber immernoch eine sequentielle Ausf"uhrung.
