@@ -1,0 +1,108 @@
+\documentclass[a4paper,11pt]{article}
+
+\newcommand{\authorinfo}{Carolin Konietzny, Paul Bienkowski, Julian Tobergte, Oliver Sengpiel}
+\newcommand{\titleinfo}{GSS Abgabe 05}
+
+% PREAMBLE ===============================================================
+
+\usepackage[german,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top=1.3in, bottom=1in, left=1.0in, right=0.6in]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{pgfplots}
+\usepackage{breqn}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{xhfill}
+\usepackage{listings}
+
+\lstset{
+    basicstyle=\footnotesize,
+}
+
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+
+\author{\authorinfo}
+\title{\titleinfo}
+\date{\today}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\authorinfo}
+\fancyhead[R]{\titleinfo}
+\fancyfoot[C]{\thepage}
+
+\newcommand{\ditto}{$\vdots$}
+\newcommand{\Frac}[2]{\frac{#1}{#2}}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+
+\item[\textbf{1.1.}]
+    Ein symmetrisches Verschlüsselungssystem besitzt genau einen Schlüssel, mit dem zwischen Klartext und Chiffretext umgewandelt werden. Im Gegensatz dazu benötigt man für asymmetrische Verschlüsselung zwei verschiedene Schlüssel, je einen zum Ver- und Entschlüsseln der Nachricht.
+
+\item[\textbf{1.2.}]
+    \begin{itemize}
+        \item[a)]
+            \begin{itemize}
+                \item Wenn Alice große Datenmengen verschicken möchte, oder zeitkritische Echtzeitanwendungen verschlüsseln möchte. Grund hierfür ist der i.d.R. höhere Rechenaufwand asymmetrischer Verschlüsselungssysteme.
+                \item Wenn Alice auch Charlie, Dave und Erin dieselbe Nachricht zukommen lassen möchte, ohne den Inhalte mehrfach versenden zu müssen.
+            \end{itemize}
+
+        \item[b)]
+            Alice erzeugt mit einem anderen, symmetrischen Verschlüsselungssystem einen neuen Schlüssel. Damit verschlüsselt sie die Daten. Den symmetrischen (Daten-)Schlüssel verschlüsselt sie ebenfalls, mit Bobs öffentlichen Schlüssel. Dann schickt sie beide Chiffres an Bob. Dieser kann den symmetrischen Schlüssel ,,entpacken'' und damit die Nachricht dekodieren.
+
+        \item[c)]
+            Wie genau die übertragene Nachricht aussieht, ist natürlich vom Verschlüsselungssystem abhängig. Auf jeden Fall beinhaltet sie zwei von jedem (durch das Protokoll definiert) zu unterscheidende Teile, einen für die Übertragung des symmetrischen Schlüssels (\emph{header}), einen für den codierten Inhalt der Nachricht (\emph{payload}).
+
+    \end{itemize}
+
+\item[\textbf{2.2.}]
+
+\item[\textbf{2.3.}]
+
+\item[\textbf{3.2.}]
+
+\item[\textbf{3.3.}]
+
+\item[\textbf{5.2.}]
+    Wir erhalten mit $d=3243$ folgenden Klartext:
+    \begin{quote}
+        Fuer die GSS-Klausur sind folgende Themen wichtig: Schutzziele, Angreifermodelle, Rainbow Tables, die (Un-)Sicherheit von Passwoertern und dazugehoerige Angriffe, Zugangs- und Zugriffskontrolle, Biometrische Verfahren, Timing-Attack und Power-Analysis, Grundlagen der Kryptographie, Authentifikationsprotokolle, das RSA-Verfahren und natuerlich alle anderen Inhalte, die wir in der Uebung und der Vorlesung behandelt haben :-)
+    \end{quote}
+
+    Hier unser \textbf{python3}-code:\begin{verbatim}
+#!/usr/bin/env python3
+from itertools import count
+
+p, q, e, data = 281, 389, 67, [103625, 71396] # ...
+
+n = p * q
+p1q1 = (p - 1) * (q - 1)
+
+for d in itertools.count():
+    if (e * d) % p1q1 == 1:
+        break
+
+def decode(c):
+    return chr((c ** d) % n)
+
+print('d = ' + str(d))
+print("".join(map(decode, data)))
+\end{verbatim}
+
+\end{enumerate}
+
+\end{document}
