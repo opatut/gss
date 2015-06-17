@@ -70,8 +70,13 @@
     \end{itemize}
 
 \item[\textbf{2.2.}]
+    Der dritte Barcode von rechts ist immer der selbe. Ein Angreifer kann also wissen welchen Barcode (+ Zeit,Datum,Preis Info unten links) er auf sein Ticket drucken muss um ein gültiges bezahltes Ticket zu kriegen. Mit diesem kann er das Parkhaus dann gratis verlassen.
+    Für die beiden Preiserlasscodes der Unternehmer scheint es auch nur insgesamt 3 verschiedene Codes zu geben, hier besteht also auch eine hohe Chance sich einen gültigen Preislassnach zu stempeln.
+
+    Das Angreifermodell hält hier offenbar einen Angreifer, der von aussen kommt, und so viel Menschen- wie auch Berechnungskapazität haben kann wie er will, solange er keinen mobilen Barcode-stempler/Drucker hat.
 
 \item[\textbf{2.3.}]
+    Die naive Methode wäre es jeden Barcode mit einem festen Passwort zu verschlüsseln, welches dem Automaten und der Schranke zum Erstellen und Lesen bekannt sein muss. Dieses Passwort liesse sich aber mit genug gesammelten Tickets durch einen Angreifer entschlüsseln. Daher sollte es einen Typ ''Mastertickets'' geben, welche nur dem Geschäftsführer des Einkaufszentrums zugänglich sind, die mit Hilfe eines besonderen Barcodes dem Automaten und der Schranke ein neues Passwort setzt. Diesen Vorgang kann man dann je nach Sicherheitsbedürfnis einmal pro Woche oder pro Tag wiederholen.
 
 \item[\textbf{3.2.}]
 
