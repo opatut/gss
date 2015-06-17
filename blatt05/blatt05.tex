@@ -74,8 +74,18 @@
 \item[\textbf{2.3.}]
 
 \item[\textbf{3.2.}]
+    Dieses Verfahren verschlüsselt immer noch nicht den tatsächlichen Datenverkehr, das heißt ein passiver Angreifer auf der Transportstrecke kann ungehindert mitlesen. Ebenfalls kann der Angreifer die gleiche Kombination aus $r$ und $c$ senden, um sich somit beim Server zu authentifizieren.
+
+    Verhindert wird lediglich ein Angriff, bei dem der Angreifer Benutzernamen und Passwort des Clients erfahren muss, etwa zur Verwendung in einem geschützten Login-System. Allerdings kann der Angreifer eine gefälschte Anfrage aus eigener Software senden, um dem Server vorzugaukeln, der Benutzer zu sein.
+
+    Ebenfalls kann der Angreifer die verschlüsselten Anmeldedaten nicht auf andere Systeme, die u.U. mit den gleichen Zugangsdaten gesichert wurden, zugreifen.
 
 \item[\textbf{3.3.}]
+    In diesem Verfahren kann ein Angreifer sich nicht ohne weiteres als der Benutzer ausgeben, denn hierfür ist die korrekte Response vonnöten. Da diese bei jeder Dienstanfrage unterschiedlich und vom Server ausgewählt wird, ist Kenntnis der Verschlüsselungsfunktion und des Schlüssels nötig.
+
+    Gelingt es dem Angreifer jedoch, die Kommunikation zwischen Benutzer und Dienstanbieter zu unterbrechen, und mit beiden gegenseitig in Echtzeit zu kommunizieren, kann der Angreifer die vom Dienstanbieter angeforderte Challenge abfangen, den Benutzer nach der dazugehörigen Response fragen, und diese dem Server mitteilen, als hätte er sie selbst generiert. Dafür ist es jedoch nötig, dass der Angreifer dem Benutzer vorgaukelt, der Dienstanbieter zu sein, ein klassischer Man-in-the-Middle-Angriff.
+
+    Wie gehabt kann der Angreifer die folgende unverschlüsselte Kommunikation abhören und ggf. modifizieren, sofern ein Eingriff in die Netzwerkarchitektur den Angreifer als Teil der Transportstrecke agieren lässt.
 
 \item[\textbf{5.2.}]
     Wir erhalten mit $d=3243$ folgenden Klartext:
