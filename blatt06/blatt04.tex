@@ -1,0 +1,93 @@
+\documentclass[a4paper,11pt]{article}
+
+\newcommand{\authorinfo}{Carolin Konietzny, Paul Bienkowski, Julian Tobergte, Oliver Sengpiel}
+\newcommand{\titleinfo}{GSS Abgabe 06}
+
+% PREAMBLE ===============================================================
+
+\usepackage[german,ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top=1.3in, bottom=1in, left=1.0in, right=0.6in]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{pgfplots}
+\usepackage{breqn}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{xhfill}
+\usepackage{blockgraph} % IMPORTANT
+\usepackage{listings}
+
+\lstset{
+    basicstyle=\footnotesize,
+}
+
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+\tikzset{main node/.style={ellipse,fill=blue!20,draw,minimum size=1cm,inner sep=0pt},
+            }
+
+\author{\authorinfo}
+\title{\titleinfo}
+\date{\today}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\authorinfo}
+\fancyhead[R]{\titleinfo}
+\fancyfoot[C]{\thepage}
+
+\newcommand{\ditto}{$\vdots$}
+\newcommand{\Frac}[2]{\frac{#1}{#2}}
+
+\begin{document}
+\maketitle
+
+
+\begin{enumerate}
+\item[\textbf{1.1}]
+
+\begin{itemize}
+    \item[a)] Wie groß ist eine Seite?
+
+    Da unsere virtuellen Adressen 16 bit breit sind und wir 4 bit für die
+    Adressierung der 16 Seiten in der Seitentabelle brauchen, haben wir ein
+    Offset von \(2^{12}\) bit Breite.  Eine Seite enthält also 8 KB.
+
+    \item[c)] Welche Physikalischen Adressen ergeben sich?
+    \begin{enumerate}
+        \item[i)] 0x0fe8
+        \item[ii)] page fault
+        \item[iii)] page fault
+        \item[iv)] 0x8101
+    \end{enumerate}
+
+    \item[d)] Wahl einer optimalen Seitengröße:
+
+    Größere pages führen dazu, dass große Bereiche des Speichers ungenutzt
+    bleiben, kleinere pages führen zu größeren page tables und zu mehr over-
+    head beim laden/speichern von pages.
+
+    \item[e)] Optimale page size:
+
+    Die optimale Größe einer Seite ergibt sich aus der Formel
+    \[
+        p = \sqrt{2 s e}
+    \]
+    mit \(s\) als Größe des Durchschnittlichen Prozesses und \(e\) als
+    Wortbreite des Systems.
+    
+    In diesem Fall also \(\sqrt{2^{26}}\).
+\end{itemize}
+
+\end{enumerate}
+
+\end{document}
