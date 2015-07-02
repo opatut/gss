@@ -84,8 +84,52 @@
     \]
     mit \(s\) als Größe des Durchschnittlichen Prozesses und \(e\) als
     Wortbreite des Systems.
-    
+
     In diesem Fall also \(\sqrt{2^{26}}\).
+\end{itemize}
+
+\item[\textbf{3.}]
+\begin{itemize}
+    \item[a)]
+        \begin{verbatim}
+Semaphor W, Mutex;
+int NumberOfActiveReaders;
+
+function Writer::processWriter() {
+    while (NumberOfActiveReaders > 0) {
+        wait();
+    }
+
+    W.lock();
+    writeData();
+    W.free();
+}
+
+function Reader::processReader() {
+    Mutex.lock();
+    NumberOfActiveReaders++;
+    // only the first reader that appears needs to allocate the resource
+    if (NumberOfActiveReaders == 1) {
+        W.lock();
+    }
+    Mutex.free();
+
+    readData();
+
+    Mutex.lock();
+    NumberOfActiveReaders--;
+    // the last reader to finish frees the resource
+    if (NumberOfActiveReaders == 0) {
+        W.free();
+    }
+    Mutex.free();
+}
+        \end{verbatim}
+
+    \item[b)]
+        Reader werden hierbei bevorteiligt, denn wenn bereits mind. ein Reader läuft, kann ein weiterer sofort starten. Startet während dessen read-Vorgang
+        wiederum ein weiterer Reader, bleibt die Resource geschützt. Somit können bei ,,ungünstigem'' Timing eine Reihe von Readern durchlaufen, ohne dass ein Writer, der u.U. schon länger auf Freigabe der Resource wartet, an die Reihe kommt.
+
 \end{itemize}
 
 \end{enumerate}
